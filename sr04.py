@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 import time
 
 LOW,HIGH = 0,1
-SPEED_OF_SOUND = 34000
+SPEED_OF_SOUND = 34000 # cm/sec
 DUTY = 0.1
 TRIG_PIN = 23
 ECHO_PIN = 24
@@ -54,17 +54,16 @@ class Sr04():
 
 
 if __name__=="__main__":
-    while True:
-        try:
-            # fixme: ave*(duty*2) 程度、測定に時間がかかる?
-            dis = 0
-            ave,duty = 3,0.01
-            for num in range(ave):
-                sens3 = Sr04()                
-                dis += sens3.calc_distance(duty=0.05)
-            dis /= ave
-            txt = '-'*int(dis)
-            print("%f %5.1f cm %s"%(time.time(),dis,txt))
-        except KeyboardInterrupt:
-            GPIO.cleanup()          
-            exit()
+    try:
+        # fixme: ave*(duty*2) 程度、測定に時間がかかる?
+        dis = 0
+        ave,duty = 3,0.01
+        for num in range(ave):
+            sens3 = Sr04()                
+            dis += sens3.calc_distance(duty=0.05)
+        dis /= ave
+        txt = '-'*int(dis)
+        print("%f %5.1f cm %s"%(time.time(),dis,txt))
+    except KeyboardInterrupt:
+        GPIO.cleanup()          
+        exit()
