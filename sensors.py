@@ -3,7 +3,7 @@ import wiringpi
 import os
 import struct
 import time
-
+from datetime import datetime 
 
 class Hdc1000():
     def __init__(self):
@@ -44,12 +44,34 @@ class Adt7410():
         return temp
 
 
+def logger_adt7410():
+    sens1 = Adt7410()
+    temp1 = sens1.read_temp()
+    now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')    
+    with open('adt7410.dat','a') as f1:
+        txt = "%s,%2.1f"%(now,temp1)
+        print(txt)        
+        f1.write(txt+"\n")
 
-    
-if __name__=="__main__":
+def logger_hdc1000():        
+    sens2 = Hdc1000()
+    temp2,humid2 = sens2.read_temp_and_humid()        
+    now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
+    with open('hdc1000.dat','a') as f2:
+        txt = "%s,%2.1f"%(now,temp2)
+        print(txt)
+        f2.write(txt+"\n")    
+
+def main():
     sens1 = Adt7410()
     temp1 = sens1.read_temp()
     sens2 = Hdc1000()
     temp2,humid2 = sens2.read_temp_and_humid()    
     print('温度(ADT7410)：%2.1f 度'%(temp1))
     print('温度(HDC1000)：%2.1f 度'%(temp2))    
+        
+if __name__=="__main__":
+    while True:
+        logger_adt7410()
+        logger_hdc1000()
+        time.sleep(10*60)
