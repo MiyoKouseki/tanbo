@@ -23,7 +23,10 @@ chan3 = AnalogIn(ads, ADS.P3)
 # chan = AnalogIn(ads, ADS.P0, ADS.P1)
 
 
-print("{:26s},{:>5},{:>5},{:>5}".format("Time[JST]","ch0[V]","ch1[V]","ch2[V]"))
+txt = "{:26s},{:>5},{:>5},{:>5}".format("Time[JST]","ch0[V]","ch1[V]","ch2[V]")
+#print(txt)
+# with open('ads1015.dat','w') as f:
+#     f.write(txt+'\n')
 
 while True:
     now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
@@ -31,5 +34,8 @@ while True:
     v1 = chan1.voltage*5    
     v2 = chan2.voltage*5
     v3 = chan3.voltage*5        
-    print("{:26s},{:>5.4f},{:>5.4f},{:>5.4f},{:>5.4f}".format(now,v0,v1,v2,v3))
-    time.sleep(1)
+    txt = "{:26s},{:>5.4f},{:>5.4f},{:>5.4f},{:>5.4f}".format(now,v0,v1,v2,v3)
+    print(txt)
+    with open('ads1015.dat','a') as f:
+        f.write(txt+'\n')    
+    time.sleep(10*60)

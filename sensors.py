@@ -72,6 +72,6 @@ def main():
         
 if __name__=="__main__":
     while True:
-        logger_adt7410()
+        #logger_adt7410()
         logger_hdc1000()
         time.sleep(10*60)
