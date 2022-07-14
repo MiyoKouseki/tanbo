@@ -3,6 +3,9 @@ import discord
 from secrets import TOKEN
 from sensors import Adt7410,Hdc1000
 from datetime import datetime
+import board
+import adafruit_ina260
+from datetime import datetime
     
 # python3 -m pip install -U "discord.py"
 
@@ -39,6 +42,17 @@ def main():
                     '温度(ADT7410): %2.1f 度\n'%(temp1) +\
                     '温度(HDC1000): %2.1f 度\n'%(temp2)
                 await message.channel.send(txt)
+            if '/tanbo voltage'==message.content:        
+                i2c = board.I2C()
+                ch0 = adafruit_ina260.INA260(i2c,address=0x42) # battery
+                v0 = ch0.voltage
+                ch1 = adafruit_ina260.INA260(i2c,address=0x4c) # pannel     
+                v1 = ch1.voltage
+                ch2 = adafruit_ina260.INA260(i2c,address=0x43) # load
+                v2 = ch2.voltage
+                txt = "{:>5.4f},{:>5.4f},{:>5.4f}".format(v0,v1,v2)
+                await message.channel.send(txt)                
+                
                         
     client.run(TOKEN)
 
