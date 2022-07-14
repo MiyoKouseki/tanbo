@@ -14,17 +14,17 @@ if __name__=='__main__':
     while True:
         now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
         try:
-            ch0 = adafruit_ina260.INA260(i2c,address=0x42)        
+            ch0 = adafruit_ina260.INA260(i2c,address=0x42) # battery
             v0 = ch0.voltage
         except:
             v0 = 0
         try:
-            ch1 = adafruit_ina260.INA260(i2c,address=0x4c)            
+            ch1 = adafruit_ina260.INA260(i2c,address=0x4c) # pannel     
             v1 = ch1.voltage
         except:
             v1 = 0
         try:
-            ch2 = adafruit_ina260.INA260(i2c,address=0x43)            
+            ch2 = adafruit_ina260.INA260(i2c,address=0x43) # load
             v2 = ch2.voltage
         except:
             v2 = 0
