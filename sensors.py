@@ -43,6 +43,11 @@ class Adt7410():
         temp = data*0.0625
         return temp
 
+class Ina260():
+    def __init__(self):
+        pass
+    
+    
 
 def logger_adt7410():
     sens1 = Adt7410()
