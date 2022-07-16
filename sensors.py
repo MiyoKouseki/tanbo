@@ -76,7 +76,5 @@ def main():
     print('温度(HDC1000)：%2.1f 度'%(temp2))    
         
 if __name__=="__main__":
-    while True:
-        #logger_adt7410()
-        logger_hdc1000()
-        time.sleep(10*60)
+    #logger_adt7410()
+    logger_hdc1000()
