@@ -1,11 +1,10 @@
-
-
-
-if __name__=='__main__':
-    import time
-    import board
-    import adafruit_ina260
-    from datetime import datetime
+import time
+import signal
+import board
+import adafruit_ina260
+from datetime import datetime
+    
+def main(arg1, args2):
     i2c = board.I2C()
     txt = "{:26s},{:>5},{:>5},{:>5}".format("Time[JST]","ch0[V]","ch1[V]","ch2[V]") \
         + ",{:>5},{:>5},{:>5}".format("ch0[A]","ch1[A]","ch2[A]") \
@@ -36,7 +35,9 @@ if __name__=='__main__':
         ch2 = adafruit_ina260.INA260(i2c,address=0x43) # battery
         v2 = ch2.voltage
         i2 = ch2.current/1000
-        p2 = ch2.power/1000                                    
+        p2 = ch2.power/1000
+        if i2>0:
+            p2 = p2*-1        
     except:
         v2 = 0
         i2 = 0
@@ -45,5 +46,11 @@ if __name__=='__main__':
         + ",{:>+6.3f},{:>+6.3f},{:>+6.3f}".format(i0,i1,i2) \
         + ",{:>+6.3f},{:>+6.3f},{:>+6.3f}".format(p0,p1,p2)
     print(txt)
-    with open('ina260.dat','a') as f:
-        f.write(txt+'\n')    
+    with open('/home/pi/play/tanbo/ina260.dat','a') as f:
+        f.write(txt+'\n')        
+
+if __name__=='__main__':
+    signal.signal(signal.SIGALRM, main)
+    signal.setitimer(signal.ITIMER_REAL, 1, 1)
+    while True:
+        pass
