@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import time
 import signal
 import board
@@ -13,15 +15,19 @@ def main(arg1, args2):
     #     print(txt)
     #     f.write(txt+'\n')        
     now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S.%f')
-    try:
-        ch0 = adafruit_ina260.INA260(i2c,address=0x42) # pannel
-        v0 = ch0.voltage
-        i0 = ch0.current/1000
-        p0 = ch0.power/1000        
-    except:
-        v0 = 0
-        i0 = 0
-        p0 = 0
+    # try:
+    #     ch0 = adafruit_ina260.INA260(i2c,address=0x42) # pannel
+    #     v0 = ch0.voltage
+    #     i0 = ch0.current/1000
+    #     p0 = ch0.power/1000        
+    # except:
+    #     v0 = 0
+    #     i0 = 0
+    #     p0 = 0
+    v0 = 0
+    i0 = 0
+    p0 = 0
+    
     try:
         ch1 = adafruit_ina260.INA260(i2c,address=0x4c) # load
         v1 = ch1.voltage
@@ -51,6 +57,6 @@ def main(arg1, args2):
 
 if __name__=='__main__':
     signal.signal(signal.SIGALRM, main)
-    signal.setitimer(signal.ITIMER_REAL, 1, 1)
+    signal.setitimer(signal.ITIMER_REAL, 10, 10)
     while True:
         pass

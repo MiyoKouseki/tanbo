@@ -95,6 +95,7 @@ def main():
                 txt += " - 太陽電池[W]: {:>5.2f}\n".format(p0)
                 txt += " - 負荷[W]: {:>5.2f}\n".format(p1)
                 txt += " - バッテリー[W]: {:>5.2f}\n".format(p2)
+                txt += " - バッテリー[V]: {:>5.2f}\n".format(v2)                
                 _temp2 = temp2
                 _cputemp = cputemp
                 _pw_health = pw_health
